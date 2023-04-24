@@ -43,7 +43,6 @@ $RECEIVED_DATA = "received_data.csv";
 //		)
 //);
 
-
 //
 //$f = fopen($RECEIVED_DATA, 'w');
 //$str_value = serialize($data["received_data"]);
