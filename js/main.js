@@ -51,13 +51,14 @@ const changeData = (newData, baseData) => {
   }
 }
 
+// функция отправки запроса. Аргумент GET запрос
 const sendData = async (data) => {
   let dataToChange;
   try {
     // использование метода fetch() для отправки асинхронного запроса на сервер
     let response = await fetch(`${url}?data=${JSON.stringify(data)}`);
     if (response.ok) {
-      // получаем ответ в формате JSON и сохраняем его в data
+      // получаем ответ в формате JSON и сохраняем его в dataToChange
       dataToChange = await response.json();
     }
   }
@@ -112,7 +113,9 @@ const isEmpty = (data) => {
   return false;
 }
 
+// функция установки цвета кнопке
 const setColorButton = (dataObject, param) => {
+  // присваиваем значения ключа param свойств 'received_data' и 'data_to_send' соответствующим переменным
   let volueReceived = dataObject['received_data'][param];
   let volueToSend;
   if ((dataObject['data_to_send']).hasOwnProperty(param)) {
@@ -121,6 +124,7 @@ const setColorButton = (dataObject, param) => {
     return;
   }
   if (!isEmpty(volueToSend) && !isEmpty(volueReceived)) {
+    // в зависимости от значений переменных volueReceived и volueToSend устанавливаем цвет кнопки
     let colorButton;
     if (volueReceived === 'on' && volueToSend === 'on') {
       colorButton = 'rgba(0, 255, 127, 0.7)'; // зеленый
@@ -136,6 +140,7 @@ const setColorButton = (dataObject, param) => {
   }
 }
 
+// функция установки svg для изображения лампы
 const setImgLamp = (dataObject, param) => {
   let volueReceived = dataObject['received_data'][param];// значение из файла полученных данных
   if (!isEmpty(volueReceived)) {
@@ -152,7 +157,9 @@ const setImgLamp = (dataObject, param) => {
   }
 }
 
+// функция установки option в select
 const setOptionInSelect = (dataObject, param) => {
+  // присваиваем значения ключа param свойств 'received_data' и 'data_to_send' соответствующим переменным
   let volueReceived = dataObject['received_data'][param];// значение из файла полученных данных
   let volueToSend;
   if ((dataObject['data_to_send']).hasOwnProperty(param)) { // содержится ли ключ в объекте
@@ -161,6 +168,8 @@ const setOptionInSelect = (dataObject, param) => {
     return;
   }
   if (!isEmpty(volueToSend) && !isEmpty(volueReceived)) {
+    // В зависимости от равенства переменных volueToSend и volueReceived устанавливаем цвет select
+    // устанавливаем value для select равным volueToSend
     let colorText;
     if (volueReceived !== volueToSend) {
       colorText = 'rgba(255, 255, 0, 0.6)';
@@ -175,7 +184,9 @@ const setOptionInSelect = (dataObject, param) => {
   }
 }
 
+// функция установки значения для input
 const setVolueInInput = (dataObject, param) => {
+  // присваиваем значения ключа param свойств 'received_data' и 'data_to_send' соответствующим переменным
   let volueReceived = dataObject['received_data'][param];// значение из файла полученных данных
   let volueToSend;
   if ((dataObject['data_to_send']).hasOwnProperty(param)) { // содержится ли ключ в объекте
@@ -184,6 +195,9 @@ const setVolueInInput = (dataObject, param) => {
     return;
   }
   if (!isEmpty(volueToSend) && !isEmpty(volueReceived)) {
+    // В зависимости от равенства переменных volueToSend и volueReceived устанавливаем цвет input
+    // устанавливаем value для input равным volueToSend
+    // устанавливаем value для input type=Range равным volueToSend
     let colorText;
     if (volueReceived !== volueToSend) {
       colorText = 'rgba(255, 255, 0, 0.6)';
@@ -199,12 +213,15 @@ const setVolueInInput = (dataObject, param) => {
   }
 }
 
-const changeParameters = () => {
+
+const checkParameters = () => {
   console.log('вызов функции');
   console.log(visibleFormId);
+  // выбираем все элемнты с id из видимой формы
   document.querySelectorAll(`#${visibleFormId} [id]`).forEach(element => {
     console.log(element.value);
     console.log(dataFromServ['data_to_send'][element.id]);
+    // если значение элемента не равно сохраненному в dataFromServ['data_to_send'], т.е. только что изменено
     if (element.value != dataFromServ['data_to_send'][element.id]) {
       console.log('out');
       return;
@@ -233,13 +250,15 @@ document.addEventListener("DOMContentLoaded", () => { // событие загр
 });
 
 // запрос главной формы
-document.querySelectorAll('#formMain button').forEach(element => {
+document.querySelectorAll('#formMain button').forEach(element => { // если была нажата любая кнопка
   element.onclick = function () {
     let dataToSend = {
       'data_to_send': {},
       'received_data': {}
     }
+    // находим все элементы формы formMain имеющие id
     let elements = document.querySelectorAll('#formMain [id]');
+    // добавляем в объект свойства равные id элементов с пустыми значениями
     for (let i = 0; i < elements.length; i++) {
       dataToSend['data_to_send'][elements[i].id] = '';
       dataToSend['received_data'][elements[i].id] = '';
@@ -254,9 +273,11 @@ document.querySelectorAll('#formMain button').forEach(element => {
   }
 });
 
+
+// действия при вводе данных в поля input и select
 document.querySelectorAll("input, select").forEach(element => {
   element.oninput = function () {
-    changeParameters();
+    checkParameters();
   }
 });
 
