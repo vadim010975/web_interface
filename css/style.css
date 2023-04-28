@@ -224,7 +224,7 @@ button:hover {
 }
 
 .form-elementes-container {
-  margin-top: 30px;
+  margin-top: 25px;
   display: flex;
   justify-content: space-between;
 }
@@ -254,12 +254,12 @@ button:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 30px;
+  padding-bottom: 25px;
   border-bottom: 3px solid var(--bc-header-nav-main);
 }
 
 .form-box-text-parametr {
-  margin-top: 30px;
+  margin-top: 25px;
 }
 
 .form-box-text-parametr:last-of-type {
@@ -336,6 +336,27 @@ input[type="range"]::-webkit-slider-thumb {
   background-repeat: no-repeat;
   background-size: 0.66em auto;
   background-position: right 0.2em center;
+}
+
+.form-wrap-button-send {
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 3px solid var(--bc-header-nav-main);
+  text-align: center;
+}
+
+.form-button-send {
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: var(--shadow-form);
+}
+
+.form-button-send:hover {
+  background-color: rgb(75, 75, 75);
+}
+
+.form-button-send-img {
+  height: 50px;
 }
 
 
@@ -453,6 +474,11 @@ input[type="range"]::-webkit-slider-thumb {
     width: 40px;
     height: 40px;
   }
+
+  .form-button-send-img {
+    height: 40px;
+  }
+}
 
 @media (max-width: 640px) {
   .header {
@@ -575,4 +601,7 @@ input[type="range"]::-webkit-slider-thumb {
     height: 30px;
   }
 
+  .form-button-send-img {
+    height: 30px;
+  }
 }

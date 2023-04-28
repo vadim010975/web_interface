@@ -68,7 +68,7 @@
                 <div class="form-text">
                   отопление
                 </div>
-                <button class="form-button" id="switch_heat">
+                <button type="button" class="form-button" id="switch_heat">
                   <svg class="form-button-img">
                     <use xlink:href="#svg_form_bottom"></use>
                   </svg>
@@ -128,7 +128,7 @@
                 <div class="form-text">
                   освещение
                 </div>
-                <button class="form-button" id="switch_light">
+                <button type="button" class="form-button" id="switch_light">
                   <svg class="form-button-img">
                     <use xlink:href="#svg_form_bottom"></use>
                   </svg>
@@ -291,54 +291,45 @@
               <div class="form-box-text-parametr">
                 <div class="form-text">
                   <span class="form-text-desktop">
-                    <input name="setTempBadroomRange" type="range" min="1" max="30" step="0.1" value="23"
-                      oninput="setTempBadroom.value = Math.round(setTempBadroomRange.valueAsNumber)">
+                    <input name="setTempBadroomRange" type="range" min="1" max="30" step="0.1" value="23">
                   </span>
                 </div>
                 <div class="form-parametr">
                   <input type="number" name="setTempBadroom" min="1" max="30" value="23"
-                    class="form-parametr-input-text" oninput="setTempBadroomRange.value = setTempBadroom.valueAsNumber"
-                    id="set_temp_badroom">
+                    class="form-parametr-input-text" id="set_temp_badroom">
                 </div>
               </div>
               <div class="form-box-text-parametr">
                 <div class="form-text">
                   <span class="form-text-desktop">
-                    <input name="setTempChildrenroomRange" type="range" min="1" max="30" step="0.1" value="23"
-                      oninput="setTempChildrenroom.value = Math.round(setTempChildrenroomRange.valueAsNumber)">
+                    <input name="setTempChildrenroomRange" type="range" min="1" max="30" step="0.1" value="23">
                   </span>
                 </div>
                 <div class="form-parametr">
                   <input type="number" name="setTempChildrenroom" min="1" max="30" value="23"
-                    class="form-parametr-input-text"
-                    oninput="setTempChildrenroomRange.value = setTempChildrenroom.valueAsNumber"
-                    id="set_temp_childrenroom">
+                    class="form-parametr-input-text" id="set_temp_childrenroom">
                 </div>
               </div>
               <div class="form-box-text-parametr">
                 <div class="form-text">
                   <span class="form-text-desktop">
-                    <input name="setTempLivingroomRange" type="range" min="1" max="30" step="0.1" value="23"
-                      oninput="setTempLivingroom.value = Math.round(setTempLivingroomRange.valueAsNumber)">
+                    <input name="setTempLivingroomRange" type="range" min="1" max="30" step="0.1" value="23">
                   </span>
                 </div>
                 <div class="form-parametr">
                   <input type="number" max="30" min="1" name="setTempLivingroom" value="23"
-                    class="form-parametr-input-text"
-                    oninput="setTempLivingroomRange.value = setTempLivingroom.valueAsNumber" id="set_temp_livingroom">
+                    class="form-parametr-input-text" id="set_temp_livingroom">
                 </div>
               </div>
               <div class="form-box-text-parametr">
                 <div class="form-text">
                   <span class="form-text-desktop">
-                    <input name="setTempHollwayRange" type="range" min="1" max="30" step="0.1" value="23"
-                      oninput="setTempHollway.value = Math.round(setTempHollwayRange.valueAsNumber)">
+                    <input name="setTempHollwayRange" type="range" min="1" max="30" step="0.1" value="23">
                   </span>
                 </div>
                 <div class="form-parametr">
                   <input type="number" max="30" min="1" name="setTempHollway" value="23"
-                    class="form-parametr-input-text" oninput="setTempHollwayRange.value = setTempHollway.valueAsNumber"
-                    id="set_temp_hallway">
+                    class="form-parametr-input-text" id="set_temp_hallway">
                 </div>
               </div>
             </div>
