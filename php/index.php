@@ -4,8 +4,8 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Credentials: true');
-$FILE_DATA_TO_SEND = "data_to_send.csv";
-$RECEIVED_DATA = "received_data.csv";
+$FILE_DATA_TO_SEND_TO_ARDUINO = "data_to_send.csv";
+$FILE_DATA_RECEIVED_FROM_ARDUINO = "received_data.csv";
 
 //$array = array(
 //    "data_to_send" => array(
@@ -49,25 +49,25 @@ $RECEIVED_DATA = "received_data.csv";
 //fwrite($f, $str_value);
 //fclose($f);
 
-$dataFromFile = array();
-$file = file_get_contents($FILE_DATA_TO_SEND); // получаем контент из файла
-$dataFromFile["data_to_send"] = unserialize($file); // переводим из строки в массив
-$file = file_get_contents($RECEIVED_DATA); // получаем контент из файла
-$dataFromFile["received_data"] = unserialize($file); // переводим из строки в массив
+$dataFromFiles = array();
+$contentFromFile = file_get_contents($FILE_DATA_TO_SEND_TO_ARDUINO); // получаем контент из файла
+$dataFromFiles["data_to_send"] = unserialize($contentFromFile); // переводим из строки в массив
+$contentFromFile = file_get_contents($FILE_DATA_RECEIVED_FROM_ARDUINO); // получаем контент из файла
+$dataFromFiles["received_data"] = unserialize($contentFromFile); // переводим из строки в массив
 
-$dataReceived = json_decode($_GET["data"], true); // декодируем пришедший запрос
+$dataFromWeb = json_decode($_GET["data"], true); // декодируем пришедший запрос
 // var_dump($dataToSend);
 
-foreach (array_keys($dataReceived) as $firstKey) { // проходим по первым ключам полученного массива
-	if (array_key_exists($firstKey, $dataFromFile)) { // есть ли ключ в массиве из файла
-		foreach (array_keys($dataReceived[$firstKey]) as $secondKey) { // проходим по вторым ключам полученного массива
-			if (array_key_exists($secondKey, $dataFromFile[$firstKey])) { // есть ли ключ в массиве из файла
-				if (!empty($dataReceived[$firstKey][$secondKey] && $firstKey !== 'received_data')) {
+foreach (array_keys($dataFromWeb) as $firstKey) { // проходим по первым ключам полученного массива
+	if (array_key_exists($firstKey, $dataFromFiles)) { // есть ли ключ в массиве из файла
+		foreach (array_keys($dataFromWeb[$firstKey]) as $secondKey) { // проходим по вторым ключам полученного массива
+			if (array_key_exists($secondKey, $dataFromFiles[$firstKey])) { // есть ли ключ в массиве из файла
+				if (!empty($dataFromWeb[$firstKey][$secondKey] && $firstKey !== 'received_data')) {
 					// если значение из полученного массива не пустое и первый ключ не 'received_data'
-					$dataFromFile[$firstKey][$secondKey] = $dataReceived[$firstKey][$secondKey];
+					$dataFromFiles[$firstKey][$secondKey] = $dataFromWeb[$firstKey][$secondKey];
 					// сохраняем значение из полученного массива в мвссив из файла
 				} else { // если значение из полученного массива пустое или первый ключ 'received_data'
-					$dataReceived[$firstKey][$secondKey] = $dataFromFile[$firstKey][$secondKey];
+					$dataFromWeb[$firstKey][$secondKey] = $dataFromFiles[$firstKey][$secondKey];
 					// сохраняем значение из массива файла в полученный мвссив
 				}
 			}
@@ -75,10 +75,10 @@ foreach (array_keys($dataReceived) as $firstKey) { // проходим по пе
 	}	
 }
 
-$f = fopen($FILE_DATA_TO_SEND, 'w');
-$str_value = serialize($dataFromFile["data_to_send"]);
+$f = fopen($FILE_DATA_TO_SEND_TO_ARDUINO, 'w');
+$str_value = serialize($dataFromFiles["data_to_send"]);
 fwrite($f, $str_value);
 fclose($f);
 
-echo json_encode($dataReceived);
-?>
+echo json_encode($dataFromWeb);
+

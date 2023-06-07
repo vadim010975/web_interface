@@ -1,6 +1,6 @@
 const url = '/php/index.php';
-let visibleFormId;
-let dataFromServ = {};
+let visibleFormId; // id формы видимой в данный момент
+let dataFromServ = {}; // переменная для объекта, загруженного из сервера
 let data = {
   'data_to_send': {
     'switch_heat': '',
@@ -38,6 +38,8 @@ let data = {
   }
 };
 
+
+// функция вставски объекта newData в объект baseData
 const changeData = (newData, baseData) => {
   if (!isEmpty(newData) && typeof newData === 'object' && typeof baseData === 'object') {
     for (let firstKey in newData) {
@@ -217,7 +219,7 @@ const setVolueInInput = (dataObject, param) => {
 const setEventFromButton = () => {
   let elementButton = document.querySelector(`#${visibleFormId} button`);
   if (elementButton) {
-    elementButton.onclick = function() {
+    elementButton.onclick = function () {
       let dataToSend = {
         'data_to_send': {},
         'received_data': {}
@@ -255,8 +257,10 @@ function isChangeParameters() {
 
 // функция добавления или исключения в форму кнопки отправки-загрузки данных
 const showOrHideButton = () => {
-  const visibleForm = document.querySelector(`#${visibleFormId}`);
-  const insertElement = document.querySelector(`#${visibleFormId} .form-wrap-button-send`);
+  const visibleForm = document.querySelector(`#${visibleFormId}`); // элемент видимая форма
+  const insertElement = document.querySelector(`#${visibleFormId} .form-wrap-button-send`); // элемент кнопка отправки в видимой форме
+  // запускаем сравнение данных видимой формы и соответствующих данных из dataFromServ
+  // true усли были изменения
   const checkParam = isChangeParameters();
   if (checkParam && !insertElement) {
     visibleForm.insertAdjacentHTML('beforeend', '<div class="form-wrap-button-send"><button type="button" class="form-button-send"><img src="svg/reload.svg" alt="кнопка отправки" class="form-button-send-img"></button></div>');
@@ -265,6 +269,21 @@ const showOrHideButton = () => {
     insertElement.remove();
   }
 }
+
+// функция возвращает объект с обнуленными значениями видимой формы
+function updatingVisibleFormData() {
+  let elements = document.querySelectorAll(`#${visibleFormId} [id]`);
+  let dataToSend = {
+    'data_to_send': {},
+    'received_data': {}
+  };
+  elements.forEach(element => {
+    dataToSend['data_to_send'][element.id] = '';
+    dataToSend['received_data'][element.id] = '';
+  });
+  return dataToSend;
+}
+
 
 // обработчик onclick на nav-list
 document.querySelector('.nav-list').addEventListener('click', (event) => {
@@ -283,10 +302,12 @@ document.querySelector('.nav-list').addEventListener('click', (event) => {
 // запрос при загрузке документа
 document.addEventListener("DOMContentLoaded", () => { // событие загрузки
   sendData(data);
+  //setInterval(sendData(updatingVisibleFormData()), 10000);
 });
 
 // запрос главной формы
-document.querySelectorAll('#formMain button').forEach(element => { // если была нажата любая кнопка
+document.querySelectorAll('#formMain button').forEach(element => {
+  // если была нажата любая кнопка
   element.onclick = function () {
     let dataToSend = {
       'data_to_send': {},

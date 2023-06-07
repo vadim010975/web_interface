@@ -4,7 +4,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Credentials: true');
-$FILE_DATA_TO_SEND = "data_to_send.csv";
+$contentFromFiles_DATA_TO_SEND_TO_ARDUINO = "data_to_send.csv";
 $RECEIVED_DATA = "received_data.csv";
 
 $arrayConstant = array(
@@ -43,7 +43,7 @@ $arrayConstant = array(
 		)
 );
 
-$f = fopen($FILE_DATA_TO_SEND, 'w');
+$f = fopen($contentFromFiles_DATA_TO_SEND_TO_ARDUINO, 'w');
 $str_value = serialize($arrayConstant["data_to_send"]);
 fwrite($f, $str_value);
 fclose($f);
